@@ -78,3 +78,9 @@ Sample Agent Response
   }
 }
 ```
+
+# Dashboard
+
+The Dashboard app is a Django-based application that collects system metrics from agents and displays them on a central dashboard. Agents return real-time data such as system stats, which is then shown on the dashboard for easy monitoring and analysis.
+
+The code for Dashboated is located under dashboard folder.
