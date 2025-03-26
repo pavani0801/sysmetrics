@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sysmetrics Monitoring Dashboard{% endblock %}</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Static CSS -->
+    <link rel="stylesheet" href="{% static 'dashboard/css/styles.css' %}">
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <div class="container">
+        {% include 'dashboard/includes/header.html' %}
+        
+        <div class="tabs">
+            <a href="{% url 'dashboard_index' %}" class="tab {% if request.path == '/' %}active{% endif %}" data-tab="systeminfo">System Info</a>
+            <a href="{% url 'dashboard_processes' %}" class="tab {% if '/processes/' in request.path %}active{% endif %}" data-tab="process">Processes</a>
+        </div>
+        
+        {% block content %}{% endblock %}
+    </div>
+    
+    {% include 'dashboard/includes/footer.html' %}
+    
+    <!-- Static JS -->
+    <script src="{% static 'dashboard/js/dashboard.js' %}"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

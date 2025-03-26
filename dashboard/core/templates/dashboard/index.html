@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+    <div id="systeminfo" class="tab-content active">
+        <!-- System Information Section -->
+        <div class="info-block">
+            <h2>System Information</h2>
+            <table class="info-table">
+                <tr>
+                    <th>Hostname</th>
+                    <td>{{ metrics.hostname }}</td>
+                </tr>
+                <tr>
+                    <th>IP Address</th>
+                    <td>{{ metrics.ip_address }}</td>
+                </tr>
+                <tr>
+                    <th>OS Info</th>
+                    <td>{{ metrics.os_info }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- CPU Information Section -->
+        <div class="info-block">
+            <h2>CPU Information</h2>
+            <table class="info-table">
+                <tr>
+                    <th>Overall Usage</th>
+                    <td>{{ metrics.cpu.overall_usage|floatformat:2 }}%</td>
+                </tr>
+                <tr>
+                    <th>User</th>
+                    <td>{{ metrics.cpu.user|floatformat:2 }}%</td>
+                </tr>
+                <tr>
+                    <th>System</th>
+                    <td>{{ metrics.cpu.system|floatformat:2 }}%</td>
+                </tr>
+                <tr>
+                    <th>Idle</th>
+                    <td>{{ metrics.cpu.idle|floatformat:2 }}%</td>
+                </tr>
+                <tr>
+                    <th>Cores</th>
+                    <td>{{ metrics.cpu.cores }}</td>
+                </tr>
+                <tr>
+                    <th>Physical Cores</th>
+                    <td>{{ metrics.cpu.physical_cores }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Memory Information Section -->
+        <div class="info-block">
+            <h2>Memory Information</h2>
+            <table class="info-table">
+                <tr>
+                    <th>Total</th>
+                    <td>{{ metrics.memory.total|divide:1073741824|floatformat:2 }} GB</td>
+                </tr>
+                <tr>
+                    <th>Available</th>
+                    <td>{{ metrics.memory.available|divide:1073741824|floatformat:2 }} GB</td>
+                </tr>
+                <tr>
+                    <th>Used</th>
+                    <td>{{ metrics.memory.used|divide:1073741824|floatformat:2 }} GB</td>
+                </tr>
+                <tr>
+                    <th>Free</th>
+                    <td>{{ metrics.memory.free|divide:1073741824|floatformat:2 }} GB</td>
+                </tr>
+                <tr>
+                    <th>Percent Used</th>
+                    <td>{{ metrics.memory.percent_used|floatformat:2 }}%</td>
+                </tr>
+                <tr>
+                    <th>Swap Total</th>
+                    <td>{{ metrics.memory.swap_total|divide:1073741824|floatformat:2 }} GB</td>
+                </tr>
+                <tr>
+                    <th>Swap Used</th>
+                    <td>{{ metrics.memory.swap_used|divide:1073741824|floatformat:2 }} GB</td>
+                </tr>
+                <tr>
+                    <th>Swap Percent</th>
+                    <td>{{ metrics.memory.swap_percent|floatformat:2 }}%</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Disk Information Section -->
+        <div class="info-block">
+            <h2>Disk Information</h2>
+            {% for partition in metrics.disk.partitions %}
+            <div>
+                <h3>{{ partition.mountpoint }}</h3>
+                <table class="info-table">
+                    <tr>
+                        <th>Device</th>
+                        <td>{{ partition.device }}</td>
+                    </tr>
+                    <tr>
+                        <th>File System</th>
+                        <td>{{ partition.fstype }}</td>
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <td>{{ partition.total|divide:1073741824|floatformat:2 }} GB</td>
+                    </tr>
+                    <tr>
+                        <th>Used</th>
+                        <td>{{ partition.used|divide:1073741824|floatformat:2 }} GB</td>
+                    </tr>
+                    <tr>
+                        <th>Free</th>
+                        <td>{{ partition.free|divide:1073741824|floatformat:2 }} GB</td>
+                    </tr>
+                    <tr>
+                        <th>Percent Used</th>
+                        <td>{{ partition.percent_used|floatformat:2 }}%</td>
+                    </tr>
+                </table>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Charts Sections with placeholders -->
+        <div class="chart-container">
+            <h2>CPU Usage Over Time</h2>
+            <canvas id="cpuChart" class="chart-canvas"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <h2>Memory Usage Over Time</h2>
+            <canvas id="memoryChart" class="chart-canvas"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <h2>Disk Usage Over Time</h2>
+            <canvas id="diskChart" class="chart-canvas"></canvas>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Initialize chart data from Django context
+    const metrics = {{ metrics|safe }};
+</script>
+{% endblock %}

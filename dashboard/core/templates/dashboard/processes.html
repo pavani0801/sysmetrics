@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="process" class="tab-content active">
+    <table id="process-table">
+        <thead>
+            <tr>
+                <th>PID</th>
+                <th>Username</th>
+                <th>CPU %</th>
+                <th>Memory %</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Create Time</th>
+                <th>Command Line</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for process in processes %}
+            <tr>
+                <td data-label="PID">{{ process.pid }}</td>
+                <td data-label="Username">{{ process.username }}</td>
+                <td data-label="CPU %">{{ process.cpu_percent|floatformat:2 }}%</td>
+                <td data-label="Memory %">{{ process.memory_percent|floatformat:2 }}%</td>
+                <td data-label="Name">{{ process.name }}</td>
+                <td data-label="Status">{{ process.status }}</td>
+                <td data-label="Create Time">{{ process.create_time }}</td>
+                <td data-label="Command Line">{{ process.cmdline }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8">No processes found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

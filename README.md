@@ -79,8 +79,63 @@ Sample Agent Response
 }
 ```
 
-# Dashboard
+# SysMetrics Dashboard
 
 The Dashboard app is a Django-based application that collects system metrics from agents and displays them on a central dashboard. Agents return real-time data such as system stats, which is then shown on the dashboard for easy monitoring and analysis.
 
-The code for Dashboated is located under dashboard folder.
+The code for Dashboard is located under dashboard folder.
+
+
+
+
+## Project Overview
+
+## Prerequisites
+- Python 3.8+
+- Django 4.2+
+- Requests library
+
+## Setup Instructions
+
+1. Clone the repository
+```bash
+git clone <repo-url>
+cd sysmetrics/dashboard
+```
+
+
+2. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+4. Configure Settings
+- Ensure `http://127.0.0.1:8000/metrics` is accessible
+
+5. Run Migrations
+```bash
+python manage.py migrate
+```
+
+6. Start the Development Server
+```bash
+python manage.py runserver 0.0.0.0:7000
+
+In browser open url http://localhost:7000
+```
+
+## Project Structure
+- `dashboard/`: Main application
+  - `views.py`: Dashboard and processes views
+  - `urls.py`: URL routing
+  - `templates/`: HTML templates
+  - `static/`: CSS and JavaScript files
+
+## UI
+![Processes Info](./processes.png)
+![System Info](./sysinfo.png)
+
+
+## Notes
+- Ensure your metrics API returns data in the expected JSON format
+- Chart updates are handled client-side with JavaScript
