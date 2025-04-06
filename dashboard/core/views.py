@@ -8,7 +8,7 @@ def index(request):
     """
     try:
         # Fetch metrics from the API
-        response = requests.get('http://127.0.0.1:8000/metrics')
+        response = requests.get(settings.METRICS_API_URL)
         metrics_data = response.json()
     except requests.RequestException:
         # Handle API request failure
@@ -31,7 +31,7 @@ def processes(request):
     """
     try:
         # Fetch metrics from the API
-        response = requests.get('http://127.0.0.1:8000/metrics')
+        response = requests.get(settings.METRICS_API_URL)
         metrics_data = response.json()
     except requests.RequestException:
         metrics_data = {

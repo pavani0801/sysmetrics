@@ -79,6 +79,82 @@ Sample Agent Response
 }
 ```
 
+# System Metrics Collector
+
+A Django application that collects and stores system metrics (CPU, memory, and disk usage) from hosts.
+
+## Features
+
+- **Automated Collection**: Scheduled job fetches system metrics every 1 minutes
+- **Storage**: Stores the  metrics for visualization
+- **RESTful API**: Access to historical metric data
+- **Time Series**: Track system performance over time
+
+## How It Works
+
+The application consists of:
+
+1. **Scheduler**: Background job that runs on a configurable interval
+2. **API Client**: Fetches metrics from  system metrics API endpoint
+3. **Database Storage**: Stores key performance metrics
+4. **REST API**: Provides access to the collected data
+
+
+
+## API Endpoints
+
+- `/api/hosts/` - List all monitored hosts
+- `/api/metrics/` - Access raw metrics data
+
+
+## Sample API Response
+
+```json
+[
+    {
+        "id": 21,
+        "hostname": "linux",
+        "timestamp": "2025-04-06T18:03:14Z",
+        "cpu_usage": 10.18181818181817,
+        "memory_total": 33369800704,
+        "memory_used": 1814437888,
+        "memory_percent": 6.6,
+        "disk_total": 2162202353664,
+        "disk_used": 23720402944,
+        "disk_percent": 1.0970482436023694
+    },
+    {
+        "id": 20,
+        "hostname": "linux",
+        "timestamp": "2025-04-06T18:02:14Z",
+        "cpu_usage": 13.45454545454544,
+        "memory_total": 33369800704,
+        "memory_used": 1823940608,
+        "memory_percent": 6.7,
+        "disk_total": 2162202353664,
+        "disk_used": 23720402944,
+        "disk_percent": 1.0970482436023694
+    },
+    {
+        "id": 19,
+        "hostname": "linux",
+        "timestamp": "2025-04-06T18:01:14Z",
+        "cpu_usage": 12.54545454545453,
+        "memory_total": 33369800704,
+        "memory_used": 1819013120,
+        "memory_percent": 6.7,
+        "disk_total": 2162202353664,
+        "disk_used": 23720402944,
+        "disk_percent": 1.0970482436023694
+    }
+]
+```
+
+## Database tables
+![Host](./host_tablepng.png)
+![SystemMetric](./systemmetric_table.png)
+
+
 # SysMetrics Dashboard
 
 The Dashboard app is a Django-based application that collects system metrics from agents and displays them on a central dashboard. Agents return real-time data such as system stats, which is then shown on the dashboard for easy monitoring and analysis.

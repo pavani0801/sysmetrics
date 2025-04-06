@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core'
+    'core',
+    'metrics',
+    'django_apscheduler',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -78,6 +81,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        'OPTIONS': {
+            'timeout': 30,  # Increase timeout to 30 seconds
+        }
     }
 }
 
@@ -122,3 +128,38 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+METRICS_API_URL = "http://127.0.0.1:8000/metrics"
+
+
+# Django APScheduler settings
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"  # Default format
+APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
+
+# Configure logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+        },
+        'metrics': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        'apscheduler': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+        },
+    },
+}
+
+from django.db.backends.sqlite3.base import DatabaseWrapper
+DatabaseWrapper.data_types['DateTimeField'] = 'datetime'  # Helps with timezone handling
