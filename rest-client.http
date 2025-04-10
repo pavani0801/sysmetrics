@@ -1,0 +1,15 @@
+
+## List host historical metrics
+GET http://127.0.0.1:7000/historical/api/metrics/
+##  List all hosts
+
+GET http://127.0.0.1:7000/historical/api/hosts/
+
+## Agent metrics API
+
+GET  http://localhost:8000/metrics
+
+
+
+
+

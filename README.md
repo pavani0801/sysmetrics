@@ -212,6 +212,9 @@ In browser open url http://localhost:7000
 ![System Info](./sysinfo.png)
 
 
+## Unit Tests
+ - pytest core/tests/test_views.py -v
+ - pytest metrics/tests/ -v
 ## Notes
 - Ensure your metrics API returns data in the expected JSON format
 - Chart updates are handled client-side with JavaScript
