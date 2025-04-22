@@ -88,7 +88,7 @@ class SystemMetricsJob:
             timestamp=timestamp,
             
             # CPU metrics
-            cpu_usage=cpu_data.get('overall_usage', 0) * 100,  # Convert to percentage
+            cpu_usage=cpu_data.get('overall_usage', 0),  
             
             # Memory metrics
             memory_total=memory_data.get('total', 0),

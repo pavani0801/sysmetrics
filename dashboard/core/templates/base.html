@@ -15,11 +15,67 @@
     <!-- Static CSS -->
     <link rel="stylesheet" href="{% static 'dashboard/css/styles.css' %}">
     
+    <style>
+        /* Logout button styles */
+        .user-controls {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+        
+        .logout-button {
+            background-color: #e0e0e0;
+            color: #333;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .logout-button:hover {
+            background-color: #d0d0d0;
+        }
+        
+        .logout-icon {
+            width: 16px;
+            height: 16px;
+        }
+        
+        @media (max-width: 768px) {
+            .logout-button span {
+                display: none;
+            }
+        }
+    </style>
+    
     {% block extra_head %}{% endblock %}
 </head>
 <body>
     <div class="container">
-        {% include 'dashboard/includes/header.html' %}
+        <header class="header">
+            {% include 'dashboard/includes/header.html' %}
+            
+            <!-- Logout Button -->
+            <div class="user-controls">
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button">
+                        <svg class="logout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        <span>Logout</span>
+                    </button>
+                </form>
+            </div>
+        </header>
         
         <div class="tabs">
             <a href="{% url 'dashboard_index' %}" class="tab {% if request.path == '/' %}active{% endif %}" data-tab="systeminfo">System Info</a>

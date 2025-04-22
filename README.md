@@ -213,8 +213,20 @@ In browser open url http://localhost:7000
 
 
 ## Unit Tests
+ - cd into sysmetrics folder and install all dependencies from requirements.txt using below command
+ - python -m pip install -r requirements.txt 
+ - cd into dashboard folder then run below commands
  - pytest core/tests/test_views.py -v
  - pytest metrics/tests/ -v
+ - to run all unit tests at once run below command
+ - pytest core/tests/ metrics/tests/ -v
+
+## Run tests with coverage
+ - cd into sysmetrics folder and install all dependencies from requirements.txt using below command
+ - python -m pip install -r requirements.txt 
+ - cd into dashboard folder then run below commands
+ - pytest --cov=core --cov=metrics --cov-report=html core/tests/ metrics/tests/ -v
+ - This will create a directory called htmlcov with an index.html file you can open in your browser.
 ## Notes
 - Ensure your metrics API returns data in the expected JSON format
 - Chart updates are handled client-side with JavaScript
