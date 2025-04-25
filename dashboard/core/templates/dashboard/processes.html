@@ -25,7 +25,7 @@
                 <td data-label="Name">{{ process.name }}</td>
                 <td data-label="Status">{{ process.status }}</td>
                 <td data-label="Create Time">{{ process.create_time }}</td>
-                <td data-label="Command Line">{{ process.cmdline }}</td>
+                <td data-label="Command Line" class="long-text">{{ process.cmdline }}</td>
             </tr>
             {% empty %}
             <tr>

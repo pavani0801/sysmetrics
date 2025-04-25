@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const chartConfig = {
+    const lineChartConfig = {
         type: 'line',
         options: {
             responsive: true,
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Create Chart.js instances
     const cpuChart = new Chart(document.getElementById('cpuChart'), {
-        ...chartConfig,
+        ...lineChartConfig,
         data: {
             labels: chartData.labels,
             datasets: [{
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     const memoryChart = new Chart(document.getElementById('memoryChart'), {
-        ...chartConfig,
+        ...lineChartConfig,
         data: {
             labels: chartData.labels,
             datasets: [{
@@ -69,23 +69,51 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // Create container for disk chart to control size
+    const diskChartElement = document.getElementById('diskChart');
+    const diskChartContainer = document.createElement('div');
+    diskChartContainer.id = 'diskChart-container';
+    diskChartElement.parentNode.insertBefore(diskChartContainer, diskChartElement);
+    diskChartContainer.appendChild(diskChartElement);
+    
+    
     const diskChart = new Chart(document.getElementById('diskChart'), {
-        ...chartConfig,
+        type: 'pie',
         data: {
-            labels: chartData.labels,
+            labels: ['Used', 'Free'],
             datasets: [{
-                label: 'Disk Usage',
-                data: chartData.diskData,
-                backgroundColor: '#f59e0b',
-                borderColor: '#f59e0b',
-                fill: false,
-                pointRadius: 0
+                data: [0, 100], // Initial data (will be updated)
+                backgroundColor: ['#f59e0b', '#e5e7eb'],
+                borderColor: ['#f59e0b', '#e5e7eb'],
+                borderWidth: 1
             }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, 
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        font: {
+                            size: 10 
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ' + context.raw + '%';
+                        }
+                    }
+                }
+            }
         }
     });
     
     // Create refresh mask
-    const dashboardContainer = document.querySelector('.dashboard') || document.body;
+    const dashboardContainer =  document.body;
     const refreshMask = document.createElement('div');
     refreshMask.className = 'refresh-mask';
     refreshMask.innerHTML = `
@@ -96,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     dashboardContainer.appendChild(refreshMask);
     
-    // Add CSS for the refresh mask
+    // Add CSS for the refresh mask and charts
     const style = document.createElement('style');
     style.textContent = `
         .refresh-mask {
@@ -143,6 +171,18 @@ document.addEventListener('DOMContentLoaded', function() {
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+        
+        /* Disk chart size control */
+        #diskChart {
+            max-width: 200px;
+            max-height: 200px;
+            margin: 0 auto; /* Center the chart */
+        }
+        #diskChart-container {
+            position: relative;
+            height: 200px;
+            width: 100%;
         }
     `;
     document.head.appendChild(style);
@@ -191,10 +231,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     chartData.diskData = chartData.diskData.slice(overflow);
                 }
                 
-                // Update charts
+                // Update line charts
                 cpuChart.update();
                 memoryChart.update();
-                diskChart.update();
+                
+                // Update pie chart with latest disk usage
+                if (chartData.diskData.length > 0) {
+                    const latestDiskUsage = chartData.diskData[chartData.diskData.length - 1];
+                    diskChart.data.datasets[0].data = [
+                        latestDiskUsage,
+                        100 - latestDiskUsage
+                    ];
+                    diskChart.update();
+                }
                 
                 toggleRefreshMask(false);
             })
@@ -223,13 +272,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Check if this is a new timestamp before adding
                 if (chartData.labels.length === 0 || timeLabel !== chartData.labels[chartData.labels.length - 1]) {
-                    // Update chart data
+                    // Update line charts data
                     chartData.labels.push(timeLabel);
-                    chartData.cpuData.push(Math.min(latestMetric.cpu_usage, 100)); // Cap at 100% for display
+                    chartData.cpuData.push(Math.min(latestMetric.cpu_usage, 100));
                     chartData.memoryData.push(latestMetric.memory_percent);
                     chartData.diskData.push(latestMetric.disk_percent);
                     
-                    // Limit chart data points
+                    // Limit chart data points for line charts
                     if (chartData.labels.length > 20) {
                         chartData.labels.shift();
                         chartData.cpuData.shift();
@@ -237,9 +286,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         chartData.diskData.shift();
                     }
                     
-                    // Update charts
+                    // Update line charts
                     cpuChart.update();
                     memoryChart.update();
+                    
+                    // Update pie chart with latest disk usage
+                    diskChart.data.datasets[0].data = [
+                        latestMetric.disk_percent,
+                        100 - latestMetric.disk_percent
+                    ];
                     diskChart.update();
                 }
                 

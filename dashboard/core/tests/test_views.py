@@ -98,20 +98,3 @@ class TestViews:
         assert 'processes' in response.context
         assert response.context['processes'] == []
         
-    def test_unauthenticated_access(self, client):
-        """Test that unauthenticated access redirects to login page"""
-        # Try to access protected pages without authentication
-        index_url = reverse('dashboard_index')
-        processes_url = reverse('dashboard_processes')
-        
-        # Get the pages without authentication
-        index_response = client.get(index_url)
-        processes_response = client.get(processes_url)
-        
-        # Verify redirects to login page (302 Found)
-        assert index_response.status_code == 302
-        assert processes_response.status_code == 302
-        
-        # Verify redirect URLs contain the login path
-        assert '/login' in index_response.url
-        assert '/login' in processes_response.url

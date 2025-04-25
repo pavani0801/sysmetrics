@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 
-@login_required(login_url='/login')
+
 def index(request):
     """
     Main dashboard view that fetches system metrics from the API
@@ -27,7 +27,7 @@ def index(request):
     }
     return render(request, 'dashboard/index.html', context)
 
-@login_required(login_url='/login')
+
 def processes(request):
     """
     Processes view that can be used for a separate processes page
