@@ -1,6 +1,8 @@
 import requests
 from django.shortcuts import render
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
+
 
 def index(request):
     """
@@ -24,6 +26,7 @@ def index(request):
         'metrics': metrics_data
     }
     return render(request, 'dashboard/index.html', context)
+
 
 def processes(request):
     """

@@ -6,6 +6,7 @@ asgiref==3.8.1
 certifi==2025.1.31
 charset-normalizer==3.4.1
 click==8.1.8
+coverage==7.8.0
 Django==5.1.7
 django-apscheduler==0.7.0
 djangorestframework==3.16.0
@@ -22,6 +23,7 @@ pydantic_core==2.27.2
 pyinstaller==6.12.0
 pyinstaller-hooks-contrib==2025.1
 pytest==8.3.5
+pytest-cov==6.1.1
 pytest-django==4.11.1
 pytest-mock==3.14.0
 requests==2.32.3

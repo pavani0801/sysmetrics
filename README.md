@@ -33,7 +33,7 @@ pip install -r requirements.txt
 ```bash
 python agent/main.py
 
-In browser open url http://localhost:8000/metrics
+In browser open url http://127.0.0.1:8000/metrics
 
 ```
 
@@ -197,7 +197,7 @@ python manage.py migrate
 ```bash
 python manage.py runserver 0.0.0.0:7000
 
-In browser open url http://localhost:7000
+In browser open url http://127.0.0.1:7000
 ```
 
 ## Project Structure
@@ -210,11 +210,43 @@ In browser open url http://localhost:7000
 ## UI
 ![Processes Info](./processes.png)
 ![System Info](./sysinfo.png)
+![Graph1](./graph1.png)
+![Graph2](./graph2.png)
+## Mobile Responsive
+![Mobile Responsive](./mobile1.png)
 
+##  To run both the Agent and Web Server
+
+A script named `run.py` has been added.
+
+- Use it after installing dependencies.
+- Run the following command from sysmetrics folder:
+
+```bash
+python run.py
+```
 
 ## Unit Tests
+ - cd into sysmetrics folder and install all dependencies from requirements.txt using below command
+ - python -m pip install -r requirements.txt 
+ - cd into dashboard folder then run below commands
  - pytest core/tests/test_views.py -v
  - pytest metrics/tests/ -v
+ - to run all unit tests at once run below command
+ - pytest core/tests/ metrics/tests/ -v
+
+## Unit Test results
+ ![Unit Test results](./unit_test_output.png)
+
+## Run tests with coverage
+ - cd into sysmetrics folder and install all dependencies from requirements.txt using below command
+ - python -m pip install -r requirements.txt 
+ - cd into dashboard folder then run below commands
+ - pytest --cov=core --cov=metrics --cov-report=html core/tests/ metrics/tests/ -v
+ - This will create a directory called htmlcov with an index.html file you can open in your browser.
+
+## Code Coverage results
+ ![Code Coverage results](./code_cov_output.png)
 ## Notes
 - Ensure your metrics API returns data in the expected JSON format
 - Chart updates are handled client-side with JavaScript

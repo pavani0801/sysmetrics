@@ -58,7 +58,7 @@ class TestSystemMetricsJob(TestCase):
         # Verify a system metric was created
         metric = SystemMetric.objects.filter(host=host).first()
         self.assertIsNotNone(metric)
-        self.assertEqual(metric.cpu_usage, 25.0)  # 0.25 * 100
+        self.assertEqual(metric.cpu_usage, 0.25)
         self.assertEqual(metric.memory_total, 8589934592)
         self.assertEqual(metric.memory_used, 4294967296)
         self.assertEqual(metric.memory_percent, 50.0)

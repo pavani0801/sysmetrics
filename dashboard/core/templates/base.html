@@ -15,11 +15,16 @@
     <!-- Static CSS -->
     <link rel="stylesheet" href="{% static 'dashboard/css/styles.css' %}">
     
+    <style>
+    </style>
+    
     {% block extra_head %}{% endblock %}
 </head>
 <body>
     <div class="container">
-        {% include 'dashboard/includes/header.html' %}
+        <header class="header">
+            {% include 'dashboard/includes/header.html' %}
+        </header>
         
         <div class="tabs">
             <a href="{% url 'dashboard_index' %}" class="tab {% if request.path == '/' %}active{% endif %}" data-tab="systeminfo">System Info</a>
