@@ -23,7 +23,7 @@ class SystemMetricsJob:
         """
         try:
             # Get metrics from API
-            response = requests.get(self.api_url, timeout=30)
+            response = requests.get(self.api_url, timeout=3000)
             response.raise_for_status()
             data = response.json()
             
