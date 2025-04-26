@@ -33,7 +33,7 @@ pip install -r requirements.txt
 ```bash
 python agent/main.py
 
-In browser open url http://localhost:8000/metrics
+In browser open url http://127.0.0.1:8000/metrics
 
 ```
 
@@ -197,7 +197,7 @@ python manage.py migrate
 ```bash
 python manage.py runserver 0.0.0.0:7000
 
-In browser open url http://localhost:7000
+In browser open url http://127.0.0.1:7000
 ```
 
 ## Project Structure
