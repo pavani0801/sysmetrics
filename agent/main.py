@@ -11,8 +11,8 @@ from pydantic import BaseModel
 
 
 app = FastAPI(
-    title="Linux Metrics Agent",
-    description="Agent for collecting system metrics on Linux hosts",
+    title="Linux/Windows Metrics Agent",
+    description="Agent for collecting system metrics on Linux/Windows hosts",
     version="1.0.0"
 )
 
@@ -128,7 +128,7 @@ def get_process_info():
 async def root():
     """Root endpoint that returns basic information about the API."""
     return {
-        "message": "Linux Metrics Agent",
+        "message": "Linux/Windows Metrics Agent",
         "endpoints": {
             "/metrics": "Get full system metrics",
             "/metrics/cpu": "Get CPU metrics only",
