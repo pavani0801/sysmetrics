@@ -1,6 +1,6 @@
 # Metrics Collection Agent
 
-A lightweight agent for collecting system metrics on Linux hosts and exposing them via a RESTful API.
+A lightweight agent for collecting system metrics on any OS hosts and exposing them via a RESTful API.
 
 ## Overview
 
@@ -16,7 +16,7 @@ Data is collected using Python's `psutil` library, which provides a cross-platfo
 ## Requirements
 
 - Python 3.8+
-- Linux environment 
+- OS(Windows/linux) environment 
 - Network connectivity for API access
 
 ## Installation
@@ -43,7 +43,7 @@ Sample Agent Response
   "timestamp": "2025-03-18 16:35:24",
   "hostname": "Host1",
   "ip_address": "127.0.1.1",
-  "os_info": "Linux 5",
+  "os_info": "Windows 10",
   "cpu": {
     "percent_usage_per_core": [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
     "overall_usage": 0.0909090909090909,
@@ -113,7 +113,7 @@ The application consists of:
 [
     {
         "id": 21,
-        "hostname": "linux",
+        "hostname": "Windows",
         "timestamp": "2025-04-06T18:03:14Z",
         "cpu_usage": 10.18181818181817,
         "memory_total": 33369800704,
@@ -125,7 +125,7 @@ The application consists of:
     },
     {
         "id": 20,
-        "hostname": "linux",
+        "hostname": "Windows",
         "timestamp": "2025-04-06T18:02:14Z",
         "cpu_usage": 13.45454545454544,
         "memory_total": 33369800704,
@@ -137,7 +137,7 @@ The application consists of:
     },
     {
         "id": 19,
-        "hostname": "linux",
+        "hostname": "Windows",
         "timestamp": "2025-04-06T18:01:14Z",
         "cpu_usage": 12.54545454545453,
         "memory_total": 33369800704,
